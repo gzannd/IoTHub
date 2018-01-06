@@ -17,6 +17,11 @@ namespace Common.Implementation.Device
             throw new NotImplementedException();
         }
 
+        public void InvalidateAuthorizationCodeForDevice(int deviceId)
+        {
+            throw new NotImplementedException();
+        }
+
         public IDeviceAuthorizationCode UpdateItem(IDeviceAuthorizationCode model)
         {
             throw new NotImplementedException();

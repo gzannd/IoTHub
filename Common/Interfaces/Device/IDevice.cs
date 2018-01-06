@@ -6,7 +6,7 @@ namespace Common.Interfaces.Device
 {
     public interface IDevice
     {
-        int DeviceId { get; set; }
+        Guid DeviceId { get; set; }
         int ProfileId { get; set; }
         int AccountId { get; set; }
 

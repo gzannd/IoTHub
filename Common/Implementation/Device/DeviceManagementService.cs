@@ -12,11 +12,13 @@ namespace Common.Implementation.Device
     {
         protected IDeviceRepository _deviceRepository;
         protected IAccountService _accountService;
+        protected IDeviceAuthorizationRepository _deviceAuthorizationRepository;
 
-        public DeviceManagementService(IAccountService accountService, IDeviceRepository deviceRepository)
+        public DeviceManagementService(IAccountService accountService, IDeviceRepository deviceRepository, IDeviceAuthorizationRepository deviceAuthorizationRepository)
         {
             _deviceRepository = deviceRepository;
             _accountService = accountService;
+            _deviceAuthorizationRepository = deviceAuthorizationRepository;
         }
         
         /// <summary>
@@ -25,9 +27,17 @@ namespace Common.Implementation.Device
         /// <param name="account"></param>
         /// <param name="device"></param>
         /// <returns></returns>
-        public IDeviceActivationResult ActivateDevice(IAccount account, IDevice device)
+        public IDeviceActivationResult ActivateDevice(IAccount account, IDevice device, string activationCode)
         {
-            throw new NotImplementedException();
+            //Verify that the account is valid.
+            var accountResult = _accountService.GetItem(account.Id);
+
+            //Verify that the activation code matches the most recent pending code 
+            if(accountResult is AccountSuccessResult)
+            {
+                device.IsActive = true;
+                _deviceRepository.UpdateItem(device);
+            }
         }
 
         /// <summary>
