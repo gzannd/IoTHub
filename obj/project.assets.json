@@ -12558,8 +12558,8 @@
     },
     "Common/1.0.0": {
       "type": "project",
-      "path": "../../Common/Common.csproj",
-      "msbuildProject": "../../Common/Common.csproj"
+      "path": "Common/Common.csproj",
+      "msbuildProject": "Common/Common.csproj"
     }
   },
   "projectFileDependencyGroups": {
@@ -12604,8 +12604,8 @@
       "frameworks": {
         "netcoreapp2.0": {
           "projectReferences": {
-            "C:\\Users\\Anthony\\Documents\\Development\\Common\\Common.csproj": {
-              "projectPath": "C:\\Users\\Anthony\\Documents\\Development\\Common\\Common.csproj"
+            "C:\\Users\\Anthony\\Documents\\Development\\IoTHub\\IoTHub\\Common\\Common.csproj": {
+              "projectPath": "C:\\Users\\Anthony\\Documents\\Development\\IoTHub\\IoTHub\\Common\\Common.csproj"
             }
           }
         }
