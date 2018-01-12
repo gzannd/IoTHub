@@ -10,10 +10,11 @@ namespace Common.Interfaces.Device
     {
         IDeviceRegistrationResult RegisterDevice(IAccount account, IDevice device);
         IDeviceRegistrationResult UnRegisterDevice(IAccount account, IDevice device);
-        IDeviceActivationResult ActivateDevice(IAccount account, IDevice device, string activationCode);
+        IDeviceActivationResult ActivateDevice(IAccount account, IDevice device);
         IDeviceActivationResult DeactivateDevice(IAccount account, IDevice device);
-        IDeviceAuthorizationResult AuthorizeDevice(IAccount account, IDevice device);
+        IDeviceAuthorizationResult AuthorizeDevice(IAccount account, IDevice device, string activationCode);
         IDeviceAuthorizationResult DeauthorizeDevice(IAccount account, IDevice device);
+        IList<IDevice> GetDevices(IAccount account);
     }
 
     public interface IDeviceAuthorizationService

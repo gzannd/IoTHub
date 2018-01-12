@@ -13,6 +13,8 @@ namespace Common.Interfaces.Device
         string Name { get; set; }
         string Description { get; set; }
         bool IsActive { get; set; }
+        string AuthorizationToken { get; set; }
         DateTime DateCreated { get; set; }
+        string MACAddress { get; set; }
     }
 }

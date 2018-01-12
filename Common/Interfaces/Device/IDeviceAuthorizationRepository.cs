@@ -7,7 +7,7 @@ namespace Common.Interfaces.Device
 {
     public interface IDeviceAuthorizationRepository:IReadRepository<IDeviceAuthorizationCode, string, IDeviceAuthorizationCode>, IUpdateRepository<IDeviceAuthorizationCode, string, IDeviceAuthorizationCode>
     {
-        string CreateAuthorizationCodeForDevice(int deviceId);
-        void InvalidateAuthorizationCodeForDevice(int deviceId);
+        string CreateAuthorizationCodeForDevice(Guid deviceId);
+        void InvalidateAuthorizationCodeForDevice(Guid deviceId);
     }
 }

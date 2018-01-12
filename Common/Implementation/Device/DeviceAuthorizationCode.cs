@@ -12,7 +12,7 @@ namespace Common.Implementation.Device
             DateIssued = DateTime.Now;
         }
 
-        public int DeviceId { get; set; }
+        public Guid DeviceId { get; set; }
         public string Code { get; set; }
         public DateTime DateIssued { get; set; }
         public DateTime? DateVerified { get; set; }

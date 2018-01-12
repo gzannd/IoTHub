@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Common.Implementation.Device
 {
-    public class DeviceRegistrationFailureResult:FailureResult<IDevice, IEnumerable<string>>, IDeviceRegistrationResult
+    public class DeviceActivationFailureResult: FailureResult<IDevice, IEnumerable<string>>, IDeviceActivationResult
     {
     }
 }

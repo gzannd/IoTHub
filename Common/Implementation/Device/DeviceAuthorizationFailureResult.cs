@@ -5,7 +5,8 @@ using System.Text;
 
 namespace Common.Implementation.Device
 {
-    public class DeviceRegistrationFailureResult:FailureResult<IDevice, IEnumerable<string>>, IDeviceRegistrationResult
+    public class DeviceAuthorizationFailureResult : FailureResult<IDevice, IEnumerable<string>>, IDeviceAuthorizationResult
     {
     }
 }
+

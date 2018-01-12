@@ -14,5 +14,7 @@ namespace Common.Implementation.Device
         public string Description { get; set; }
         public bool IsActive { get; set; }
         public DateTime DateCreated { get; set; }
+        public string AuthorizationToken { get; set; }
+        public string MACAddress { get; set; }
     }
 }

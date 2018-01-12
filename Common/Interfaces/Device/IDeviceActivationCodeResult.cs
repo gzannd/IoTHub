@@ -5,8 +5,7 @@ using System.Text;
 
 namespace Common.Interfaces.Device
 {
-    public interface IDeviceRepository: IGenericRepository<IDevice, Guid, IDeviceResult>
+    public interface IDeviceActivationCodeResult: IResult<string, IEnumerable<string>>
     {
-        bool DeviceWithMACAddressExists(string MACAddress);
     }
 }

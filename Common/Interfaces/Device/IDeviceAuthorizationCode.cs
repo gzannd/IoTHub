@@ -6,7 +6,7 @@ namespace Common.Interfaces.Device
 {
     public interface IDeviceAuthorizationCode
     {
-        int DeviceId { get; set;}
+        Guid DeviceId { get; set;}
         string Code { get; set; }
         DateTime DateIssued { get; set; }
         DateTime? DateVerified { get; set; }
