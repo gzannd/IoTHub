@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace IoTHub.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/register")]
     public class RegisterController : Controller
     {
         private IUserService _userService = null;

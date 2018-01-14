@@ -5,6 +5,7 @@ using Common.Interfaces.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Common.Implementation.Service;
 using System.Text;
 
 namespace Common.Implementation.Device
@@ -14,14 +15,42 @@ namespace Common.Implementation.Device
         protected IDeviceRepository _deviceRepository;
         protected IAccountService _accountService;
         protected IDeviceAuthorizationRepository _deviceAuthorizationRepository;
+        protected Validator<IDevice> _deviceValidator;
 
-        public DeviceManagementService(IAccountService accountService, IDeviceRepository deviceRepository, IDeviceAuthorizationRepository deviceAuthorizationRepository)
+        public DeviceManagementService(IAccountService accountService, IDeviceRepository deviceRepository, IDeviceAuthorizationRepository deviceAuthorizationRepository, Validator<IDevice> validator)
         {
             _deviceRepository = deviceRepository;
             _accountService = accountService;
             _deviceAuthorizationRepository = deviceAuthorizationRepository;
+            _deviceValidator = validator;
         }
         
+        public IDeviceResult UpdateDevice(IAccount account, IDevice device)
+        {
+            IDeviceResult result = null;
+
+            var deviceValidationResult = ValidateDevice(device);
+
+            if (deviceValidationResult is DeviceFailureResult)
+            {
+                result = new DeviceFailureResult() { Item = device, Data = deviceValidationResult.Data };
+            }
+            else
+            {
+                if (ValidateAccount(account))
+                {
+                   result = _deviceRepository.UpdateItem(device);
+                }
+                else
+                {
+                    result = new DeviceActivationFailureResult() { Item = device };
+                    result.AddData(new List<string>() { "The account is not valid." });
+                }
+            }
+
+            return result;
+        }
+
         /// <summary>
         /// Toggles a device from inactive to active.
         /// </summary>
@@ -32,34 +61,43 @@ namespace Common.Implementation.Device
         {
             IDeviceActivationResult result = null;
 
-            if(ValidateAccount(account))
+            var deviceValidationResult = ValidateDevice(device);
+
+            if (deviceValidationResult is DeviceFailureResult)
             {
-                var deviceResult = _deviceRepository.GetItem(device.DeviceId);
-
-                if(deviceResult is DeviceSuccessResult)
+                result = new DeviceActivationFailureResult() { Item = device, Data = deviceValidationResult.Data };
+            }
+            else
+            {
+                if (ValidateAccount(account))
                 {
-                    deviceResult.Item.IsActive = true;
-                    var updateResult = _deviceRepository.UpdateItem(deviceResult.Item);
+                    var deviceResult = _deviceRepository.GetItem(device.DeviceId);
 
-                    if(updateResult is DeviceSuccessResult)
+                    if (deviceResult is DeviceSuccessResult)
                     {
-                        result = new DeviceActivationSuccessResult();
+                        deviceResult.Item.IsActive = true;
+                        var updateResult = _deviceRepository.UpdateItem(deviceResult.Item);
+
+                        if (updateResult is DeviceSuccessResult)
+                        {
+                            result = new DeviceActivationSuccessResult();
+                        }
+                        else
+                        {
+                            result = new DeviceActivationFailureResult() { Data = updateResult.Data };
+                        }
                     }
                     else
                     {
-                        result = new DeviceActivationFailureResult() { Data = updateResult.Data };
+                        result = new DeviceActivationFailureResult();
+                        result.AddData(new List<string>() { "Unable to retrieve device." });
                     }
                 }
                 else
                 {
-                    result = new DeviceActivationFailureResult();
-                    result.AddData(new List<string>() { "Unable to retrieve device." });
+                    result = new DeviceActivationFailureResult() { Item = device };
+                    result.AddData(new List<string>() { "The account is not valid." });
                 }
-            }
-            else
-            {
-                result = new DeviceActivationFailureResult() { Item = device };
-                result.AddData(new List<string>() { "The account is not valid." });
             }
 
             return result;
@@ -99,6 +137,25 @@ namespace Common.Implementation.Device
             return result;
         }
 
+        private IDeviceResult ValidateDevice(IDevice device)
+        {
+            IDeviceResult result;
+
+            var deviceValidationErrors = _deviceValidator.Validate(device);
+
+            if (deviceValidationErrors.Count() > 0)
+            {
+                result = new DeviceFailureResult();
+                ((List<string>)result.Data).AddRange(deviceValidationErrors);
+            }
+            else
+            {
+                result = new DeviceSuccessResult();
+            }
+
+            return result;
+        }
+
         private bool ValidateAccount(IAccount account)
         {
             //Verify that the account is valid.
@@ -115,24 +172,32 @@ namespace Common.Implementation.Device
         public IDeviceActivationCodeResult CreateAuthorizationCodeForDevice(IAccount account, IDevice device)
         {
             IDeviceActivationCodeResult result = null;
+            var deviceValidationResult = ValidateDevice(device);
 
-            if(ValidateAccount(account))
+            if (ValidateDevice(device) is DeviceFailureResult)
             {
-                var code = _deviceAuthorizationRepository.CreateAuthorizationCodeForDevice(device.DeviceId);
-
-                if(string.IsNullOrEmpty(code) == false)
+                result = new DeviceActivationCodeFailureResult {Data = deviceValidationResult.Data };
+            }
+            else
+            {
+                if (ValidateAccount(account))
                 {
-                    result = new DeviceActivationCodeSuccessResult() { Item = code };
+                    var code = _deviceAuthorizationRepository.CreateAuthorizationCodeForDevice(device.DeviceId);
+
+                    if (string.IsNullOrEmpty(code) == false)
+                    {
+                        result = new DeviceActivationCodeSuccessResult() { Item = code };
+                    }
+                    else
+                    {
+                        result = new DeviceActivationCodeFailureResult();
+                    }
                 }
                 else
                 {
                     result = new DeviceActivationCodeFailureResult();
+                    result.AddData(new List<string> { "The account is not valid." });
                 }
-            }
-            else
-            {
-                result = new DeviceActivationCodeFailureResult();
-                result.AddData( new List<string> { "The account is not valid." } );
             }
 
             return result;
@@ -148,46 +213,55 @@ namespace Common.Implementation.Device
         {
             IDeviceAuthorizationResult result = null;
 
-            //Verify that the account is valid.
-            if (ValidateAccount(account))
+            var deviceValidationResult = ValidateDevice(device);
+
+            if (ValidateDevice(device) is DeviceFailureResult)
             {
-                //Get the most recent pending activation code for the device. 
-                var codeItem = _deviceAuthorizationRepository.GetItem(activationCode);
-
-                if (codeItem != null && codeItem.DeviceId == device.DeviceId)
+                result = new DeviceAuthorizationFailureResult {Item = device,  Data = deviceValidationResult.Data };
+            }
+            else
+            {
+                //Verify that the account is valid.
+                if (ValidateAccount(account))
                 {
-                    device.IsActive = true;
-                    var updateResult = _deviceRepository.UpdateItem(device);
+                    //Get the most recent pending activation code for the device. 
+                    var codeItem = _deviceAuthorizationRepository.GetItem(activationCode);
 
-                    if (updateResult is DeviceSuccessResult)
+                    if (codeItem != null && codeItem.DeviceId == device.DeviceId)
                     {
-                        try
+                        device.IsActive = true;
+                        var updateResult = _deviceRepository.UpdateItem(device);
+
+                        if (updateResult is DeviceSuccessResult)
                         {
-                            _deviceAuthorizationRepository.InvalidateAuthorizationCodeForDevice(device.DeviceId);
-                            result = new DeviceAuthorizationSuccessResult() { Item = device };
+                            try
+                            {
+                                _deviceAuthorizationRepository.InvalidateAuthorizationCodeForDevice(device.DeviceId);
+                                result = new DeviceAuthorizationSuccessResult() { Item = device };
+                            }
+                            catch (Exception e)
+                            {
+                                //Unable to invalidate authorization code for some reason...
+                                result = new DeviceAuthorizationFailureResult() { Item = device };
+                                result.AddData(new List<string>() { e.Message });
+                            }
                         }
-                        catch (Exception e)
+                        else
                         {
-                            //Unable to invalidate authorization code for some reason...
-                            result = new DeviceAuthorizationFailureResult() { Item = device };
-                            result.AddData(new List<string>() { e.Message });
+                            result = new DeviceAuthorizationFailureResult() { Item = device, Data = updateResult.Data };
                         }
                     }
                     else
                     {
-                        result = new DeviceAuthorizationFailureResult() { Item = device, Data = updateResult.Data };
+                        result = new DeviceAuthorizationFailureResult() { Item = device };
+                        result.AddData(new List<string>() { "The device ID is not valid." });
                     }
                 }
                 else
                 {
                     result = new DeviceAuthorizationFailureResult() { Item = device };
-                    result.AddData(new List<string>() { "The device ID is not valid." });
+                    result.AddData(new List<string>() { "The account is not valid." });
                 }
-            }
-            else
-            {
-                result = new DeviceAuthorizationFailureResult() { Item = device };
-                result.AddData(new List<string>() { "The account is not valid." });
             }
 
             return result;
@@ -240,31 +314,41 @@ namespace Common.Implementation.Device
             if(account != null)
             {
                 //Validate that the account actually exists.    
-                if(!(_accountService.GetItem(account.Id) is AccountSuccessResult))
+                if (!(_accountService.GetItem(account.Id) is AccountSuccessResult))
                 {
                     result = new DeviceRegistrationFailureResult();
                     result.AddData(new List<string> { "Account does not exist." });
                 }
                 else
                 {
-                    //Check to see if a device with the same MAC Address is already registered.
-                    if (_deviceRepository.DeviceWithMACAddressExists(device.MACAddress))
+                    //Validate the device.
+                    var deviceValidationResult = ValidateDevice(device);
+
+                    if (ValidateDevice(device) is DeviceFailureResult)
                     {
-                        result = new DeviceRegistrationFailureResult();
-                        result.AddData(new List<string> { "A device with the same MAC address is already registered." });
+                        result = new DeviceRegistrationFailureResult { Item = device, Data = deviceValidationResult.Data };
                     }
                     else
                     {
-                        device.AccountId = account.Id;
-                        var createResult = _deviceRepository.CreateItem(device);
-
-                        if (createResult is DeviceRegistrationSuccessResult)
+                        //Check to see if a device with the same MAC Address is already registered.
+                        if (_deviceRepository.DeviceWithMACAddressExists(device.MACAddress))
                         {
-                            result = new DeviceRegistrationSuccessResult() { Item = device };
+                            result = new DeviceRegistrationFailureResult();
+                            result.AddData(new List<string> { "A device with the same MAC address is already registered." });
                         }
                         else
                         {
-                            result = new DeviceRegistrationFailureResult() { Data = createResult.Data };
+                            device.AccountId = account.Id;
+                            var createResult = _deviceRepository.CreateItem(device);
+
+                            if (createResult is DeviceRegistrationSuccessResult)
+                            {
+                                result = new DeviceRegistrationSuccessResult() { Item = device };
+                            }
+                            else
+                            {
+                                result = new DeviceRegistrationFailureResult() { Data = createResult.Data };
+                            }
                         }
                     }
                 }
@@ -307,6 +391,11 @@ namespace Common.Implementation.Device
             }
 
             return result;
+        }
+
+        public IDeviceResult GetDevice(Guid deviceId)
+        {
+            return _deviceRepository.GetItem(deviceId);
         }
 
         public IList<IDevice> GetDevices(IAccount account)
