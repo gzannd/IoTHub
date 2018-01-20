@@ -242,8 +242,8 @@ namespace IoTHub.Controllers
         }
 
         [HttpPost]
-        [Route("{deviceId}/authorize")]
-        public IActionResult AuthorizeDevice([FromRoute] Guid deviceId)
+        [Route("{deviceId}/authcode")]
+        public IActionResult AuthorizeDevice([FromRoute] Guid deviceId, [FromBody] string activationCode)
         {
             var deviceResult = _deviceManagementService.GetDevice(deviceId);
 
@@ -253,15 +253,15 @@ namespace IoTHub.Controllers
 
                 if (accountResult is AccountSuccessResult)
                 {
-                    var deviceUpdateResult = _deviceManagementService.AuthorizeDevice(accountResult.Item, deviceResult.Item);
+                    var deviceAuthorizationResult = _deviceManagementService.AuthorizeDevice(accountResult.Item, deviceResult.Item, activationCode);
 
-                    if (deviceUpdateResult is DeviceSuccessResult)
+                    if (deviceAuthorizationResult is DeviceSuccessResult)
                     {
                         return Ok();
                     }
                     else
                     {
-                        return BadRequest(deviceUpdateResult.Data);
+                        return BadRequest(deviceAuthorizationResult.Data);
                     }
                 }
                 else if (accountResult is AccountNotFoundResult)
