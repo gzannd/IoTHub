@@ -11,3 +11,5 @@ C:\Users\Anthony\Documents\Development\IoTHub\IoTHub\obj\Debug\netcoreapp2.0\IoT
 C:\Users\Anthony\Documents\Development\IoTHub\IoTHub\obj\Debug\netcoreapp2.0\IoTHub.AssemblyInfo.cs
 C:\Users\Anthony\Documents\Development\IoTHub\IoTHub\obj\Debug\netcoreapp2.0\IoTHub.dll
 C:\Users\Anthony\Documents\Development\IoTHub\IoTHub\obj\Debug\netcoreapp2.0\IoTHub.pdb
+C:\Users\Anthony\Documents\Development\IoTHub\IoTHub\bin\Debug\netcoreapp2.0\UnitTests.Mocks.dll
+C:\Users\Anthony\Documents\Development\IoTHub\IoTHub\bin\Debug\netcoreapp2.0\UnitTests.Mocks.pdb

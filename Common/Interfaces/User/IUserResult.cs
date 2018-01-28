@@ -6,6 +6,8 @@ using System.Text;
 
 namespace Common.Interfaces.User
 {
-    public interface IUserResult : IResult<IUser, IEnumerable<string>>
-    { }
+    public interface IUserResult : IResult<IUser, string>
+    {
+
+    }
 }

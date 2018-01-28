@@ -7,6 +7,7 @@ using Common.Implementation.User;
 using Common.Interfaces.Logging;
 using Common.Interfaces.User;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -15,26 +16,20 @@ namespace IoTHub.Controllers
     [Route("api/register")]
     public class RegisterController : Controller
     {
+        private readonly IOptions<AppSettings> _appSettings = null;
         private IUserService _userService = null;
         private ILogger _logger = null;
 
-        public RegisterController(IUserService userService, ILogger logger)
+        public RegisterController(IUserService userService, ILogger logger, IOptions<AppSettings> appSettings)
         {
             _userService = userService;
             _logger = logger;
+            _appSettings = appSettings;
         }
 
-
-        [HttpGet]
-        public IEnumerable<string> Register()
-        {
-            return new string[] { "value1", "value2" };
-        }
-
-
-        [HttpGet("{id}")]
+        [HttpGet("{id}", Name = "GetUserById")]
         [Produces(typeof(UserDTO))]
-        public IActionResult Get(int id)
+        public IActionResult GetUserById(int id)
         {
             var result = _userService.GetItem(id);
 
@@ -57,12 +52,12 @@ namespace IoTHub.Controllers
             if(result is UserSuccessResult)
             {
                 //Return an OK and put the URL to the created user in the header.
-                return Created(Url.RouteUrl(result.Item.Id), result.Item.Id);
+                return Created(Url.RouteUrl("GetUserById", new { id = result.Item.Id }), string.Format("User ID {0} created.", result.Item.Id));
             }
             else
             {
                 return BadRequest(string.Format("Unable to create user. {0}",
-                    string.Join(",", (List<string>)result.Data)));
+                    string.Join(",", result.Data.Cast<string>())));
             }
         }
 

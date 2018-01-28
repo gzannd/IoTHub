@@ -5,12 +5,12 @@ using System.Text;
 
 namespace Common.Implementation.User
 {
-    public class UserSuccessResult : SuccessResult<IUser, IEnumerable<string>>, IUserResult
+    public class UserSuccessResult : SuccessResult<IUser, string>, IUserResult
     {
 
     }
 
-    public class UserFailureResult : FailureResult<IUser, IEnumerable<string>>, IUserResult
+    public class UserFailureResult : FailureResult<IUser, string>, IUserResult
     {
 
     }

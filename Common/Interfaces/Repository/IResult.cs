@@ -9,5 +9,6 @@ namespace Common.Interfaces.Repository
         T Item { get; set; }
         IList<R> Data { get; set; }
         void AddData(R data);
+        void AddData(IEnumerable<R> dataList);
     }
 }

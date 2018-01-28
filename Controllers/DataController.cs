@@ -30,7 +30,7 @@ namespace IoTHub.Controllers
 
             var result = _deviceDataService.CreateItem(model);
 
-
+            return null;
         }
         
     }

@@ -4765,6 +4765,19 @@
         "runtime": {
           "bin/placeholder/Common.dll": {}
         }
+      },
+      "UnitTests.Mocks/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v2.0",
+        "dependencies": {
+          "Common": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/UnitTests.Mocks.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/UnitTests.Mocks.dll": {}
+        }
       }
     }
   },
@@ -12560,15 +12573,22 @@
       "type": "project",
       "path": "Common/Common.csproj",
       "msbuildProject": "Common/Common.csproj"
+    },
+    "UnitTests.Mocks/1.0.0": {
+      "type": "project",
+      "path": "../UnitTests.Mocks/UnitTests.Mocks.csproj",
+      "msbuildProject": "../UnitTests.Mocks/UnitTests.Mocks.csproj"
     }
   },
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v2.0": [
       "Common >= 1.0.0",
       "Microsoft.AspNetCore.All >= 2.0.3",
+      "Microsoft.Extensions.DependencyInjection >= 2.0.0",
       "Microsoft.NETCore.App >= 2.0.0",
       "Ninject.Web.WebApi >= 3.3.0",
-      "System.IdentityModel.Tokens.Jwt >= 5.1.5"
+      "System.IdentityModel.Tokens.Jwt >= 5.1.5",
+      "UnitTests.Mocks >= 1.0.0"
     ]
   },
   "packageFolders": {
@@ -12606,6 +12626,9 @@
           "projectReferences": {
             "C:\\Users\\Anthony\\Documents\\Development\\IoTHub\\IoTHub\\Common\\Common.csproj": {
               "projectPath": "C:\\Users\\Anthony\\Documents\\Development\\IoTHub\\IoTHub\\Common\\Common.csproj"
+            },
+            "C:\\Users\\Anthony\\Documents\\Development\\IoTHub\\UnitTests.Mocks\\UnitTests.Mocks.csproj": {
+              "projectPath": "C:\\Users\\Anthony\\Documents\\Development\\IoTHub\\UnitTests.Mocks\\UnitTests.Mocks.csproj"
             }
           }
         }
@@ -12622,6 +12645,10 @@
           "Microsoft.AspNetCore.All": {
             "target": "Package",
             "version": "[2.0.3, )"
+          },
+          "Microsoft.Extensions.DependencyInjection": {
+            "target": "Package",
+            "version": "[2.0.0, )"
           },
           "Microsoft.NETCore.App": {
             "target": "Package",

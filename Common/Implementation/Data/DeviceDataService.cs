@@ -42,7 +42,7 @@ namespace Common.Implementation.Data
             }
             catch (Exception)
             {
-                //We'll eat all exceptions here for now.
+                //We'll eat all exceptions here for now.    
             }
 
             return isValidResult;

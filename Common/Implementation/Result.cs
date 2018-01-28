@@ -21,6 +21,14 @@ namespace Common.Implementation
         public T Item { get; set; }
         public IList<R> Data { get; set; }
 
+        public void AddData(IEnumerable<R> dataList)
+        {
+           foreach(var item in dataList)
+            {
+                Data.Add(item);
+            }
+        }
+
         public void AddData(R data)
         {
             Data.Add(data);

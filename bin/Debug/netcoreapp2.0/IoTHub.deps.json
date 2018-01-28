@@ -25,9 +25,11 @@
         "dependencies": {
           "Common": "1.0.0",
           "Microsoft.AspNetCore.All": "2.0.3",
+          "Microsoft.Extensions.DependencyInjection": "2.0.0",
           "Microsoft.NETCore.App": "2.0.0",
           "Ninject.Web.WebApi": "3.3.0",
-          "System.IdentityModel.Tokens.Jwt": "5.1.5"
+          "System.IdentityModel.Tokens.Jwt": "5.1.5",
+          "UnitTests.Mocks": "1.0.0"
         },
         "runtime": {
           "IoTHub.dll": {}
@@ -3813,6 +3815,17 @@
           "Common.dll": {}
         }
       },
+      "UnitTests.Mocks/1.0.0": {
+        "dependencies": {
+          "Common": "1.0.0"
+        },
+        "runtime": {
+          "UnitTests.Mocks.dll": {}
+        },
+        "compile": {
+          "UnitTests.Mocks.dll": {}
+        }
+      },
       "Microsoft.NETCore.App/2.0.0": {
         "dependencies": {
           "Microsoft.NETCore.DotNetHostPolicy": "2.0.0",
@@ -6007,6 +6020,11 @@
       "hashPath": "windowsazure.storage.8.1.4.nupkg.sha512"
     },
     "Common/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "UnitTests.Mocks/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

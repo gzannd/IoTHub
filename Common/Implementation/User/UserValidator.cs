@@ -22,6 +22,7 @@ namespace Common.Implementation.User
                 if (string.IsNullOrEmpty(item.FirstName)) validationErrors.Add("First Name cannot be null.");
                 if (string.IsNullOrEmpty(item.LastName)) validationErrors.Add("Last Name cannot be null.");
                 if (string.IsNullOrEmpty(item.PhoneNumber)) validationErrors.Add("Phone number cannot be null.");
+                if (string.IsNullOrEmpty(item.Email)) validationErrors.Add("Email cannot be null.");
             }
             else
             {

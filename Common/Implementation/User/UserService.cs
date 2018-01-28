@@ -1,6 +1,7 @@
 ﻿using Common.Implementation.Service;
 using Common.Interfaces.Logging;
 using Common.Interfaces.User;
+using Common.Interfaces.Validator;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,9 +13,9 @@ namespace Common.Implementation.User
     {
         protected IUserRepository userRepository;
         protected ILogger logger;
-        protected Validator<IUser> userValidator;
+        protected IValidator<IUser> userValidator;
 
-        public UserService(IUserRepository userRepository, ILogger logger, Validator<IUser> userValidator)
+        public UserService(IUserRepository userRepository, ILogger logger, IValidator<IUser> userValidator)
         {
             this.userRepository = userRepository;
             this.logger = logger;
@@ -26,7 +27,7 @@ namespace Common.Implementation.User
             IUserResult result = null;
             var validationErrors = userValidator.Validate(userDTO);
 
-            if(validationErrors.Count() == 0)
+            if (validationErrors.Count() == 0)
             {
                 result = userRepository.CreateItem(userDTO);
 
@@ -39,8 +40,8 @@ namespace Common.Implementation.User
             }
             else
             {
-                result = new UserFailureResult() { Item = userDTO};
-                ((List<string>)result.Data).AddRange(validationErrors);
+                result = new UserFailureResult() { Item = userDTO };
+                result.AddData(validationErrors);
             }
 
             return result;
