@@ -19,4 +19,9 @@ namespace Common.Implementation.User
 
         public bool IsActive { get; set; }
     }
+
+    public class UserPasswordDTO:UserDTO
+    {
+        public string Password { get; set; }
+    }
 }

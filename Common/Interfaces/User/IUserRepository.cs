@@ -7,6 +7,6 @@ namespace Common.Interfaces.User
 {
     public interface IUserRepository:IGenericRepository<IUser, int, IUserResult>
     {
-
+        bool EmailExists(string email);
     }
 }

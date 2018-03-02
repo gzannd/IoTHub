@@ -2,28 +2,113 @@
 using Common.Implementation.Service;
 using Common.Implementation.User;
 using Common.Interfaces.Account;
+using Common.Interfaces.Data;
 using Common.Interfaces.Logging;
 using Common.Interfaces.Repository;
 using Common.Interfaces.User;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
+using System.Transactions;
 
 namespace Common.Implementation.UserAccount
 {
-    public class UserAccountService:AccountService
+    public class UserAccountService:ICommittable
     {
         private IUserService _userService;
+        private IAccountService _accountService;
+        private ILogger _logger;
 
-        public UserAccountService(IAccountRepository repository, IUserService userService, Validator<IAccount> accountValidator, ILogger logger):base(repository, accountValidator, logger)
+        public IDbTransaction Transaction => throw new NotImplementedException();
+
+        public UserAccountService(IUserService userService, IAccountService accountService, ILogger logger)
         {
             _userService = userService;
+            _accountService = accountService;
+            _logger = logger;
+        }
+
+        public void Rollback()
+        {
+            ((ICommittable)_userService).Rollback();
+            ((ICommittable)_accountService).Rollback();
+        }
+        public void Commit()
+        {
+            ((ICommittable)_userService).Commit();
+            ((ICommittable)_accountService).Commit();
+        }
+
+        public IUserResult DeactivateUser(IUser userDTO)
+        {
+            IUserResult userDeactivationResult = null;
+
+            try
+            {
+                userDTO.IsActive = false;
+                userDeactivationResult = _userService.UpdateItem(userDTO);
+
+                if(userDeactivationResult is UserSuccessResult)
+                {
+                    //Deactivate any/all accounts for this user.
+                    _accountService.DeactivateAllAccounts(userDTO.Id);
+                }
+            }
+            catch(Exception e)
+            {
+                userDeactivationResult = new UserFailureResult();
+                userDeactivationResult.AddData(string.Format("Error occurred while deactivating user: {0}.", e.Message));
+            }
+
+            return userDeactivationResult;
+        }
+
+        public IUserResult CreateUserAndAccount(IUser userDTO, IAccount accountDTO)
+        {
+            IUserResult userCreateResult = null;
+
+            try
+            {
+                if (_userService.EmailExists(userDTO.Email))
+                {
+                    //Can't create an account with the same email address.
+                    userCreateResult = new UserFailureResult();
+                    userCreateResult.AddData(string.Format("Email address '{0}' already exists.", userDTO.Email));
+                }
+                else
+                {
+                    userCreateResult = _userService.CreateItem(userDTO);
+
+                    if (userCreateResult is UserSuccessResult)
+                    {
+                        accountDTO.UserId = userCreateResult.Item.Id;
+
+                        if (string.IsNullOrEmpty(accountDTO.Name)) accountDTO.Name = "My Account";
+
+                        var accountCreateResult = _accountService.CreateItem(accountDTO);
+
+                        if (accountCreateResult is AccountSuccessResult)
+                        {
+                            Commit();
+                        }
+                    }
+                }
+            }
+            catch(Exception e)
+            {
+                Rollback();
+                userCreateResult = new UserFailureResult();
+                userCreateResult.AddData(string.Format("Error occcured while attempting to create a new user/account: {0}.", e.Message));
+            }
+
+            return userCreateResult;
         }
 
         public IAccountResult GetAccountForUser(IUser user)
         {
-            var accountInfo = GetItems(a => a.UserId == user.Id)
+            var accountInfo = _accountService.GetItems(a => a.UserId == user.Id)
                 .Where(r => r is AccountSuccessResult)
                 .FirstOrDefault();
 
@@ -35,50 +120,6 @@ namespace Common.Implementation.UserAccount
             {
                 return new AccountNotFoundResult();
             }
-        }
-
-        public IAccountResult CreateAccountForUser(IUser user, IAccount accountDTO)
-        {
-            IAccountResult result;
-
-            //Confirm that the user exists and has rights to create an account.
-            var findUserResult = _userService.GetItem(user.Id);
-            if(findUserResult is UserFailureResult)
-            {
-                result = new AccountFailureResult();
-                ((List<string>)result.Data).AddRange((List<string>)findUserResult.Data);
-            }
-            else if(findUserResult.Item.IsActive == false)
-            {
-                result = new AccountFailureResult();
-                result.AddData("Cannot create account because user is not active.");
-            }
-            else {
-                //Check to see if an account already exists for this user. 
-                if(GetAccountForUser(user) is AccountNotFoundResult)
-                {
-                    //Validate the account settings.
-                    var validationResult = _validator.Validate(accountDTO);
-
-                    if (((List<string>)validationResult).Count > 0)
-                    {
-                        result = new AccountFailureResult() { Data = (List<string>)validationResult };
-                    }
-                    else
-                    {
-                        //Create the account.
-                        result = CreateItem(accountDTO);
-                    }
-                }
-                else
-                { 
-                    //Account already exists.
-                    result = new AccountFailureResult();
-                    result.AddData("User account already exists.");
-                }
-            }
-
-            return result;
         }
     }
 }

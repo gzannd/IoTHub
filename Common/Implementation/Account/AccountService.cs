@@ -1,26 +1,42 @@
 ﻿using Common.Implementation.Service;
 using Common.Interfaces.Account;
+using Common.Interfaces.Data;
 using Common.Interfaces.Logging;
 using Common.Interfaces.Repository;
 using Common.Interfaces.User;
+using Common.Interfaces.Validator;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
+using System.Transactions;
 
 namespace Common.Implementation.Account
 {
-    public class AccountService : IAccountService
+    public class AccountService : IAccountService,ICommittable
     {
         private IAccountRepository _repository = null;
-        protected Validator<IAccount> _validator = null;
+        protected IValidator<IAccount> _validator = null;
         protected ILogger _logger = null;
 
-        public AccountService(IAccountRepository repository, Validator<IAccount> validator, ILogger logger)
+        public IDbTransaction Transaction => throw new NotImplementedException();
+
+        public AccountService(IAccountRepository repository, IValidator<IAccount> validator, ILogger logger)
         {
             _repository = repository;
             _validator = validator;
             _logger = logger;
+        }
+
+        public void Commit()
+        {
+            ((ICommittable)_repository).Commit();
+        }
+
+        public void Rollback()
+        {
+            ((ICommittable)_repository).Rollback();
         }
 
         public IAccountResult CreateItem (IUser user, IAccount model)
@@ -74,6 +90,16 @@ namespace Common.Implementation.Account
         public IEnumerable<IAccountResult> GetItems(Func<IAccount, bool> filter = null)
         {
             return _repository.GetItems(filter);
+        }
+
+        public IAccountResult ActivateAccount(int userId, int accountId)
+        {
+            return _repository.ActivateAccount(userId, accountId);
+        }
+
+        public IAccountResult DeactivateAllAccounts(int userId)
+        {
+            return _repository.DeactivateAllAccounts(userId);
         }
 
         public IAccountResult UpdateItem(IAccount model)

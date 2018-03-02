@@ -21,6 +21,7 @@ namespace Common.Implementation.Account
             {
                 if (string.IsNullOrEmpty(item.Name)) validationErrors.Add("Account Name cannot be null.");
                 if (item.UserId == 0) validationErrors.Add("User ID cannot be zero.");
+                if (string.IsNullOrEmpty(item.Password)) validationErrors.Add("Password cannot be blank.");
             }
             else
             {

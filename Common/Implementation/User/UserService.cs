@@ -1,25 +1,46 @@
 ﻿using Common.Implementation.Service;
+using Common.Interfaces.Data;
 using Common.Interfaces.Logging;
 using Common.Interfaces.User;
 using Common.Interfaces.Validator;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 
 namespace Common.Implementation.User
 {
-    public class UserService:IUserService, IUserRepository
+    public class UserService:IUserService, IUserRepository, ICommittable
     {
         protected IUserRepository userRepository;
         protected ILogger logger;
         protected IValidator<IUser> userValidator;
+
+        public IDbTransaction Transaction => throw new NotImplementedException();
 
         public UserService(IUserRepository userRepository, ILogger logger, IValidator<IUser> userValidator)
         {
             this.userRepository = userRepository;
             this.logger = logger;
             this.userValidator = userValidator;
+        }
+
+        public void Commit()
+        {
+            ((ICommittable)userRepository).Commit();
+        }
+
+        public void Rollback()
+        {
+            ((ICommittable)userRepository).Rollback();
+        }
+
+        public bool EmailExists(string email)
+        {
+            //Look for a user with the same email address. 
+            var result = userRepository.EmailExists(email);
+            return result;
         }
 
         public IUserResult CreateItem(IUser userDTO)

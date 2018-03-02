@@ -16,5 +16,9 @@ namespace Common.Implementation.Account
         public string Description {get;set;}
 
         public DateTime DateCreated { get; set; }
+
+        public string Password { get; set; }
+
+        public bool IsActive { get; set; }
     }
 }

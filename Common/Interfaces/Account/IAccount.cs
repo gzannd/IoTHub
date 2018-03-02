@@ -11,5 +11,7 @@ namespace Common.Interfaces.Account
         string Name { get; set; }
         string Description { get; set; }
         DateTime DateCreated { get; set; }
+        string Password { get; set; }
+        bool IsActive { get; set; }
     }
 }
