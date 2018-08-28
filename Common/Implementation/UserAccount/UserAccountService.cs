@@ -65,7 +65,7 @@ namespace Common.Implementation.UserAccount
             return userDeactivationResult;
         }
 
-        public IUserResult CreateUserAndAccount(IUser userDTO, IAccount accountDTO)
+        public IUserResult CreateUserAndAccount(IUser userDTO, string password)
         {
             IUserResult userCreateResult = null;
 
@@ -79,11 +79,13 @@ namespace Common.Implementation.UserAccount
                 }
                 else
                 {
-                    userCreateResult = _userService.CreateItem(userDTO);
+                    var result = _userService.CreateItem(userDTO, password);
 
-                    if (userCreateResult is UserSuccessResult)
+                    if (result.Result is UserSuccessResult)
                     {
-                        accountDTO.UserId = userCreateResult.Item.Id;
+                        var accountDTO = new AccountDTO();
+
+                        accountDTO.UserId = ((UserDTO)result.Result.Item).Id;
 
                         if (string.IsNullOrEmpty(accountDTO.Name)) accountDTO.Name = "My Account";
 

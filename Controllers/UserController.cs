@@ -42,7 +42,7 @@ namespace IoTHub.Controllers
         }
 
         [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
+        public IActionResult Delete(string id)
         {
             var result = _userService.DeleteItem(id);
             if (result is UserSuccessResult)

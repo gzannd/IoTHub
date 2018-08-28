@@ -27,6 +27,11 @@ using DataAccess.Dapper.Account;
 using Common.Implementation.UserAccount;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Cors.Internal;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using DataAccess;
+using Common.Implementation;
+using Microsoft.AspNetCore.Identity;
+using Common;
 
 namespace IoTHub
 {
@@ -51,24 +56,17 @@ namespace IoTHub
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IAccountService, AccountService>();
             services.AddScoped<UserAccountService>();
+            services.AddScoped<IConnectionFactory, ConnectionFactory>(c => new ConnectionFactory(ConfigurationManager.GetConnectionString("DBConnectionString")));
 
-            services.AddScoped<IUserRepository, Dapper_UserRepository>();
+            services.AddScoped<Microsoft.AspNetCore.Identity.IUserStore<IoTHubUserIdentity>, Dapper_UserRepository>();
             services.AddScoped<IAccountRepository, Dapper_AccountRepository>();
             
-            services.AddScoped<IConnectionFactory, ConnectionFactory>(c => new ConnectionFactory(ConfigurationManager.GetConnectionString("DBConnectionString")));
-            services.AddScoped<Common.Interfaces.Logging.ILogger, NullLogger>();
+             services.AddScoped<Common.Interfaces.Logging.ILogger, NullLogger>();
+
+            services.AddIdentity<IoTHubUserIdentity, ApplicationRole>().AddDefaultTokenProviders();
 
             // 1. Add Authentication Services
-            services.AddAuthentication(options =>
-            {
-                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-
-            }).AddJwtBearer(options =>
-            {
-                options.Authority = "https://iothub.auth0.com/";
-                options.Audience = "iothub";
-            });
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie();
         }
 
         

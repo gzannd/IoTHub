@@ -74,7 +74,7 @@ namespace Common.Implementation.Account
 
         public IAccountResult DeleteItem(IAccount model)
         {
-            return _repository.DeleteItem(model.Id);
+            return _repository.DeleteItem(model.AccountId);
         }
 
         public IAccountResult DeleteItem(int key)
@@ -92,12 +92,12 @@ namespace Common.Implementation.Account
             return _repository.GetItems(filter);
         }
 
-        public IAccountResult ActivateAccount(int userId, int accountId)
+        public IAccountResult ActivateAccount(string userId, int accountId)
         {
             return _repository.ActivateAccount(userId, accountId);
         }
 
-        public IAccountResult DeactivateAllAccounts(int userId)
+        public IAccountResult DeactivateAllAccounts(string userId)
         {
             return _repository.DeactivateAllAccounts(userId);
         }

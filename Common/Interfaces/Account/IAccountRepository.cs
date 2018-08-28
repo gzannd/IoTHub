@@ -8,7 +8,7 @@ namespace Common.Interfaces.Account
 {
     public interface IAccountRepository: IGenericRepository<IAccount, int, IAccountResult>
     {
-        IAccountResult DeactivateAllAccounts(int userId);
-        IAccountResult ActivateAccount(int userId, int accountId);
+        IAccountResult DeactivateAllAccounts(string userId);
+        IAccountResult ActivateAccount(string userId, int accountId);
     }
 }

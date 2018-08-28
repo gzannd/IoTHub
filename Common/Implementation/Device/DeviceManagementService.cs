@@ -161,7 +161,7 @@ namespace Common.Implementation.Device
             //Verify that the account is valid.
             try
             {
-                return _accountService.GetItem(account.Id) is AccountSuccessResult;
+                return _accountService.GetItem(account.AccountId) is AccountSuccessResult;
             }
             catch(Exception)
             {
@@ -314,7 +314,7 @@ namespace Common.Implementation.Device
             if(account != null)
             {
                 //Validate that the account actually exists.    
-                if (!(_accountService.GetItem(account.Id) is AccountSuccessResult))
+                if (!(_accountService.GetItem(account.AccountId) is AccountSuccessResult))
                 {
                     result = new DeviceRegistrationFailureResult();
                     result.AddData(new List<string> { "Account does not exist." });
@@ -338,7 +338,7 @@ namespace Common.Implementation.Device
                         }
                         else
                         {
-                            device.AccountId = account.Id;
+                            device.AccountId = account.AccountId;
                             var createResult = _deviceRepository.CreateItem(device);
 
                             if (createResult is DeviceRegistrationSuccessResult)
@@ -370,7 +370,7 @@ namespace Common.Implementation.Device
             if (account != null)
             {
                 //Validate that the account actually exists.    
-                if (!(_accountService.GetItem(account.Id) is AccountSuccessResult))
+                if (!(_accountService.GetItem(account.AccountId) is AccountSuccessResult))
                 {
                     result = new DeviceRegistrationFailureResult();
                     result.AddData(new List<string> { "Account does not exist." });
@@ -405,7 +405,7 @@ namespace Common.Implementation.Device
             //Verify that the account is valid.
             if (ValidateAccount(account))
             {
-                var deviceResults = _deviceRepository.GetItems(d => d.AccountId == account.Id);
+                var deviceResults = _deviceRepository.GetItems(d => d.AccountId == account.AccountId);
                 devices.AddRange(deviceResults
                     .Select(r => r.Item)
                     .ToList());

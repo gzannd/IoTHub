@@ -35,7 +35,7 @@ namespace IoTHub.Controllers
 
         [HttpGet("user/{id}", Name = "GetUserById")]
         [Produces(typeof(UserDTO))]
-        public IActionResult GetUserById(int id)
+        public IActionResult GetUserById(string id)
         {
             var result = _userService.GetItem(id);
 
@@ -52,7 +52,7 @@ namespace IoTHub.Controllers
         [HttpPost]
         public IActionResult Post([FromBody]UserPasswordDTO input)
         {
-            var result = _userAccountService.CreateUserAndAccount(new UserDTO { Email = input.Email, FirstName = input.FirstName, LastName = input.LastName, PhoneNumber = input.PhoneNumber }, new AccountDTO { Password = input.Password });
+            var result = _userAccountService.CreateUserAndAccount(new UserDTO { Email = input.Email, FirstName = input.FirstName, LastName = input.LastName, PhoneNumber = input.PhoneNumber }, input.Password);
             if(result is UserSuccessResult)
             {
                 //User and account successfully created. 
