@@ -82,6 +82,11 @@ namespace DataAccess.Dapper.User
             {
                 string query = "SELECT * FROM Users WHERE UserId=@UserId";
                 var user = await connection.QueryAsync<IoTHubUserIdentity>(query, new { @UserId = userId });
+                if(user.Count() > 0)
+                {
+                    user.First().Id = userId;
+                }
+
                 return user.FirstOrDefault();
             });
         }
@@ -521,7 +526,7 @@ namespace DataAccess.Dapper.User
 
         public Task<IoTHubUserIdentity> FindByIdAsync(string userId, CancellationToken cancellationToken)
         {
-            var result = FindByIdAsync(userId, cancellationToken);
+            var result = FindByIdAsync(userId);
             return Task.FromResult(result.Result);
         }
 
