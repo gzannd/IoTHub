@@ -20,7 +20,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using UnitTests.Mocks.User;
 using Common.Interfaces.Account;
 using Common.Implementation.Account;
 using DataAccess.Dapper.Account;

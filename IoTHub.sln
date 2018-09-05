@@ -1,23 +1,21 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27130.2010
+VisualStudioVersion = 15.0.27130.2036
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitTests.Mocks", "UnitTests.Mocks\UnitTests.Mocks.csproj", "{B5A46794-7297-4531-8A27-A037908541A3}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitTests.Account", "UnitTests.User\UnitTests.Account.csproj", "{480C5208-D482-4446-B7C3-3D9863EEAB88}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IoTHub", "IoTHub\IoTHub.csproj", "{FD35FD3E-71D3-4D50-BBC4-E9C711780261}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{B0870B51-240C-4881-A453-9457889C199F}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Common", "IoTHub\Common\Common.csproj", "{65E99134-93E2-407B-BF51-3918E87DE68E}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitTests.Device", "UnitTests.Device\UnitTests.Device.csproj", "{FC6D5099-EDB1-40EA-8203-A48DA4D1ED1D}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitTests.Data", "UnitTests.Data\UnitTests.Data.csproj", "{10BDD8ED-EECC-40E2-B516-18ED1669F948}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAccess", "DataAccess\DataAccess.csproj", "{2D42237D-1CC9-4BEB-A9D1-523D1B83FAD3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataAccess", "DataAccess\DataAccess.csproj", "{2D42237D-1CC9-4BEB-A9D1-523D1B83FAD3}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IoTHub", "IoTHub.csproj", "{BB611EDC-8AE7-49F4-B9D3-F0336A042D85}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Common", "Common\Common.csproj", "{3114EA7C-2529-4329-817A-3FCA44125077}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,18 +27,6 @@ Global
 		{B5A46794-7297-4531-8A27-A037908541A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B5A46794-7297-4531-8A27-A037908541A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B5A46794-7297-4531-8A27-A037908541A3}.Release|Any CPU.Build.0 = Release|Any CPU
-		{480C5208-D482-4446-B7C3-3D9863EEAB88}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{480C5208-D482-4446-B7C3-3D9863EEAB88}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{480C5208-D482-4446-B7C3-3D9863EEAB88}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{480C5208-D482-4446-B7C3-3D9863EEAB88}.Release|Any CPU.Build.0 = Release|Any CPU
-		{FD35FD3E-71D3-4D50-BBC4-E9C711780261}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{FD35FD3E-71D3-4D50-BBC4-E9C711780261}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{FD35FD3E-71D3-4D50-BBC4-E9C711780261}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{FD35FD3E-71D3-4D50-BBC4-E9C711780261}.Release|Any CPU.Build.0 = Release|Any CPU
-		{65E99134-93E2-407B-BF51-3918E87DE68E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{65E99134-93E2-407B-BF51-3918E87DE68E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{65E99134-93E2-407B-BF51-3918E87DE68E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{65E99134-93E2-407B-BF51-3918E87DE68E}.Release|Any CPU.Build.0 = Release|Any CPU
 		{FC6D5099-EDB1-40EA-8203-A48DA4D1ED1D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{FC6D5099-EDB1-40EA-8203-A48DA4D1ED1D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FC6D5099-EDB1-40EA-8203-A48DA4D1ED1D}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -53,6 +39,14 @@ Global
 		{2D42237D-1CC9-4BEB-A9D1-523D1B83FAD3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2D42237D-1CC9-4BEB-A9D1-523D1B83FAD3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2D42237D-1CC9-4BEB-A9D1-523D1B83FAD3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BB611EDC-8AE7-49F4-B9D3-F0336A042D85}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BB611EDC-8AE7-49F4-B9D3-F0336A042D85}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BB611EDC-8AE7-49F4-B9D3-F0336A042D85}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BB611EDC-8AE7-49F4-B9D3-F0336A042D85}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3114EA7C-2529-4329-817A-3FCA44125077}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3114EA7C-2529-4329-817A-3FCA44125077}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3114EA7C-2529-4329-817A-3FCA44125077}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3114EA7C-2529-4329-817A-3FCA44125077}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

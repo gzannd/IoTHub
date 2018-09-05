@@ -6,9 +6,21 @@
 
   <ItemGroup>
     <Compile Remove="Common\**" />
+    <Compile Remove="UnitTests.Data\**" />
+    <Compile Remove="UnitTests.Device\**" />
+    <Compile Remove="UnitTests.Mocks\**" />
     <Content Remove="Common\**" />
+    <Content Remove="UnitTests.Data\**" />
+    <Content Remove="UnitTests.Device\**" />
+    <Content Remove="UnitTests.Mocks\**" />
     <EmbeddedResource Remove="Common\**" />
+    <EmbeddedResource Remove="UnitTests.Data\**" />
+    <EmbeddedResource Remove="UnitTests.Device\**" />
+    <EmbeddedResource Remove="UnitTests.Mocks\**" />
     <None Remove="Common\**" />
+    <None Remove="UnitTests.Data\**" />
+    <None Remove="UnitTests.Device\**" />
+    <None Remove="UnitTests.Mocks\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -25,16 +37,16 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.3" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="2.1.2" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.1.2" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="2.1.1" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.1" />
-    <PackageReference Include="Ninject.Web.WebApi" Version="3.3.0" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="5.2.4" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\DataAccess\DataAccess.csproj" />
-    <ProjectReference Include="..\UnitTests.Mocks\UnitTests.Mocks.csproj" />
     <ProjectReference Include="Common\Common.csproj" />
+    <ProjectReference Include="DataAccess\DataAccess.csproj" />
   </ItemGroup>
 
   <ItemGroup>
