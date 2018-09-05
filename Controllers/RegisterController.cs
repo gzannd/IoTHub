@@ -3,38 +3,39 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Common.Implementation.Account;
 using Common.Implementation.User;
+using Common.Implementation.UserAccount;
+using Common.Interfaces.Account;
 using Common.Interfaces.Logging;
 using Common.Interfaces.User;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace IoTHub.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/register")]
     public class RegisterController : Controller
     {
+        private readonly IOptions<AppSettings> _appSettings = null;
         private IUserService _userService = null;
+        private IAccountService _accountService = null;
         private ILogger _logger = null;
+        private UserAccountService _userAccountService;
 
-        public RegisterController(IUserService userService, ILogger logger)
+        public RegisterController(UserAccountService userAccountService, ILogger logger, IOptions<AppSettings> appSettings)
         {
-            _userService = userService;
+            _userAccountService = userAccountService;
             _logger = logger;
+            _appSettings = appSettings;
+
         }
 
-
-        [HttpGet]
-        public IEnumerable<string> Register()
-        {
-            return new string[] { "value1", "value2" };
-        }
-
-
-        [HttpGet("{id}")]
+        [HttpGet("user/{id}", Name = "GetUserById")]
         [Produces(typeof(UserDTO))]
-        public IActionResult Get(int id)
+        public IActionResult GetUserById(string id)
         {
             var result = _userService.GetItem(id);
 
@@ -48,53 +49,48 @@ namespace IoTHub.Controllers
             }
         }
 
-
         [HttpPost]
-        public IActionResult Post([FromBody]UserDTO user)
+        public IActionResult Post([FromBody]UserPasswordDTO input)
         {
-            var result = _userService.CreateItem(user);
-
+            var result = _userAccountService.CreateUserAndAccount(new UserDTO { Email = input.Email, FirstName = input.FirstName, LastName = input.LastName, PhoneNumber = input.PhoneNumber }, input.Password);
             if(result is UserSuccessResult)
             {
+                //User and account successfully created. 
+                var user = (UserDTO)result.Item;
+
                 //Return an OK and put the URL to the created user in the header.
-                return Created(Url.RouteUrl(result.Item.Id), result.Item.Id);
+                return Created(Url.RouteUrl("GetUserById", new { id = result.Item.Id }), string.Format("User ID {0} created.", result.Item.Id));
             }
             else
             {
                 return BadRequest(string.Format("Unable to create user. {0}",
-                    string.Join(",", (List<string>)result.Data)));
+                    string.Join(",", result.Data.Cast<string>())));
             }
         }
 
-        [HttpPut("{id}")]
-        public IActionResult Put(int id, [FromBody]UserDTO user)
+        /*
+        [HttpPost("activate/{0}")]
+        public IActionResult ValidateAccountActivationCode([FromRoute]string activationCode)
         {
-            var result = _userService.UpdateItem(user);
 
-            if (result is UserSuccessResult)
-            {
-                return Ok();
-            }
-            else
-            {
-                return BadRequest(string.Format("Unable to update user. {0}",
-                    string.Join(",", (List<string>)result.Data)));
-            }
-        }
-        
-        [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
+        }*/
+
+        private async Task<string> RequestAuth0Token()
         {
-            var result = _userService.DeleteItem(id);
-            if(result is UserSuccessResult)
+            HttpClient client = new HttpClient();
+            var values = new Dictionary<string, string>
             {
-                return Ok();
-            }
-            else
-            {
-                return BadRequest(string.Format("Unable to delete user. {0}",
-                    string.Join(",", (List<string>)result.Data)));
-            }
+                {"grant_type", "client_credentials" },
+                {"client_id",  "-JyOiVVCzopfSa0xFkRmz4S5y3N24RGU"},
+                {"client_secret", "V49RdTwUBFEAK28QMAQ_B15OrKWeHyeZJKtzIIUy-ACF_wtjdFRgJvs-P2SK6fET"},
+                {"audience", "iothub" }
+            };
+            var content = new FormUrlEncodedContent(values);
+            content.Headers.Add("content-type", "application/json");
+            var response = await client.PostAsync("https://iothub.auth0.com/oauth/token", content);
+            var responseString = await response.Content.ReadAsStringAsync();
+
+            return responseString;
         }
     }
 }

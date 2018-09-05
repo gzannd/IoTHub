@@ -1,0 +1,40 @@
+﻿using Common.Interfaces.Device;
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace Common.Implementation.Device
+{
+    public class DeviceAuthorizationRepository : IDeviceAuthorizationRepository
+    {
+        public string CreateAuthorizationCodeForDevice(int deviceId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public string CreateAuthorizationCodeForDevice(Guid deviceId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IDeviceAuthorizationCode GetItem(string key)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void InvalidateAuthorizationCodeForDevice(int deviceId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void InvalidateAuthorizationCodeForDevice(Guid deviceId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IDeviceAuthorizationCode UpdateItem(IDeviceAuthorizationCode model)
+        {
+            throw new NotImplementedException();
+        }
+    }
+}
