@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Common
 {
-    public class IoTHubUserIdentity 
+    public class IoTHubUserIdentity :IUser
     {
         public string Id { get; set; }
         public string FirstName { get; set; }

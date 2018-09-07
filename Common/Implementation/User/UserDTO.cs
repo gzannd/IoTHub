@@ -5,9 +5,8 @@ using System.Text;
 
 namespace Common.Implementation.User
 {
-    public class UserDTO : IoTHubUserIdentity, IUser
+    public class UserDTO : IoTHubUserIdentity
     {
-        string IUser.Id { get; set; }
     }
 
     public class UserPasswordDTO:UserDTO

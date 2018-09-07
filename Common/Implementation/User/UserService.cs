@@ -87,8 +87,16 @@ namespace Common.Implementation.User
 
         public IUserResult GetItem(string key)
         {
-            // return userRepository.GetItem(key);
-            return null;
+            var result = userManager.FindByIdAsync(key);
+
+            if (result.Result != null)
+            {
+                return new UserSuccessResult() { Item = result.Result };
+            }
+            else
+            {
+                return new UserFailureResult();
+            }
         }
 
         public IEnumerable<IUserResult> GetItems(Func<IUser, bool> filter = null)
@@ -128,7 +136,7 @@ namespace Common.Implementation.User
 
         IUserResult IReadRepository<IUser, string, IUserResult>.GetItem(string key)
         {
-            throw new NotImplementedException();
+            return this.GetItem(key);
         }
 
         IUserResult IUpdateRepository<IUser, string, IUserResult>.UpdateItem(IUser model)
@@ -141,7 +149,6 @@ namespace Common.Implementation.User
             throw new NotImplementedException();
         }
 
-        
         IUserResult IWriteRepository<IUser, string, IUserResult>.CreateItem(IUser model)
         {
             throw new NotImplementedException();

@@ -65,6 +65,11 @@ namespace Common.Implementation.UserAccount
             return userDeactivationResult;
         }
 
+        public IUserResult GetUser(string userId)
+        {
+            return _userService.GetItem(userId);
+        }
+
         public IUserResult CreateUserAndAccount(IUser userDTO, string password)
         {
             IUserResult userCreateResult = null;
@@ -93,6 +98,7 @@ namespace Common.Implementation.UserAccount
 
                         if (accountCreateResult is AccountSuccessResult)
                         {
+                            userCreateResult = result.Result;
                             Commit();
                         }
                     }

@@ -37,7 +37,7 @@ namespace IoTHub.Controllers
         [Produces(typeof(UserDTO))]
         public IActionResult GetUserById(string id)
         {
-            var result = _userService.GetItem(id);
+            var result = _userAccountService.GetUser(id);
 
             if (result is UserSuccessResult)
             {
