@@ -1,4 +1,3 @@
-C:\Users\Anthony\Documents\Development\IoTHub\UnitTests.Device\obj\Debug\netcoreapp2.0\UnitTests.Device.csprojResolveAssemblyReference.cache
 C:\Users\Anthony\Documents\Development\IoTHub\UnitTests.Device\obj\Debug\netcoreapp2.0\UnitTests.Device.csproj.CoreCompileInputs.cache
 C:\Users\Anthony\Documents\Development\IoTHub\UnitTests.Device\obj\Debug\netcoreapp2.0\UnitTests.Device.AssemblyInfoInputs.cache
 C:\Users\Anthony\Documents\Development\IoTHub\UnitTests.Device\obj\Debug\netcoreapp2.0\UnitTests.Device.AssemblyInfo.cs
@@ -20,3 +19,5 @@ C:\Users\Anthony\Documents\Development\IoTHub\UnitTests.Device\bin\Debug\netcore
 C:\Users\Anthony\Documents\Development\IoTHub\UnitTests.Device\bin\Debug\netcoreapp2.0\Microsoft.Extensions.Identity.Core.xml
 C:\Users\Anthony\Documents\Development\IoTHub\UnitTests.Device\obj\Debug\netcoreapp2.0\UnitTests.Device.dll
 C:\Users\Anthony\Documents\Development\IoTHub\UnitTests.Device\obj\Debug\netcoreapp2.0\UnitTests.Device.pdb
+C:\Users\Anthony\Documents\Development\IoTHub\UnitTests.Device\obj\Debug\netcoreapp2.0\UnitTests.Device.csprojAssemblyReference.cache
+C:\Users\Anthony\Documents\Development\IoTHub\UnitTests.Device\obj\Debug\netcoreapp2.0\UnitTests.Device.csproj.CopyComplete

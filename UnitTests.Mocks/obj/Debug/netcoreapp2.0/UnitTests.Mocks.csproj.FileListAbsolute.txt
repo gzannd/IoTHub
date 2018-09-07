@@ -1,4 +1,3 @@
-C:\Users\Anthony\Documents\Development\IoTHub\UnitTests.Mocks\obj\Debug\netcoreapp2.0\UnitTests.Mocks.csprojResolveAssemblyReference.cache
 C:\Users\Anthony\Documents\Development\IoTHub\UnitTests.Mocks\obj\Debug\netcoreapp2.0\UnitTests.Mocks.csproj.CoreCompileInputs.cache
 C:\Users\Anthony\Documents\Development\IoTHub\UnitTests.Mocks\obj\Debug\netcoreapp2.0\UnitTests.Mocks.AssemblyInfoInputs.cache
 C:\Users\Anthony\Documents\Development\IoTHub\UnitTests.Mocks\obj\Debug\netcoreapp2.0\UnitTests.Mocks.AssemblyInfo.cs
@@ -13,3 +12,5 @@ C:\Users\Anthony\Documents\Development\IoTHub\UnitTests.Mocks\bin\Debug\netcorea
 C:\Users\Anthony\Documents\Development\IoTHub\UnitTests.Mocks\bin\Debug\netcoreapp2.0\Microsoft.Extensions.Identity.Core.xml
 C:\Users\Anthony\Documents\Development\IoTHub\UnitTests.Mocks\obj\Debug\netcoreapp2.0\UnitTests.Mocks.dll
 C:\Users\Anthony\Documents\Development\IoTHub\UnitTests.Mocks\obj\Debug\netcoreapp2.0\UnitTests.Mocks.pdb
+C:\Users\Anthony\Documents\Development\IoTHub\UnitTests.Mocks\obj\Debug\netcoreapp2.0\UnitTests.Mocks.csprojAssemblyReference.cache
+C:\Users\Anthony\Documents\Development\IoTHub\UnitTests.Mocks\obj\Debug\netcoreapp2.0\UnitTests.Mocks.csproj.CopyComplete

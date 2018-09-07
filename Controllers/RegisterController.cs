@@ -9,6 +9,7 @@ using Common.Implementation.UserAccount;
 using Common.Interfaces.Account;
 using Common.Interfaces.Logging;
 using Common.Interfaces.User;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 
@@ -75,6 +76,32 @@ namespace IoTHub.Controllers
 
         }*/
 
+        [HttpGet]
+        [Authorize]
+        [Route("private")]
+        public IActionResult TestAction()
+        {
+            return Json(new
+            {
+                Message = "Hello from a private endpoint! You need to be authenticated to see this."
+            });
+        }
+
+        [HttpGet]
+        [Route("token")]
+        public IActionResult Token()
+        {
+            var result = RequestAuth0Token();
+            if(result.Result != null)
+            {
+                return Ok(result.Result);
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+
         private async Task<string> RequestAuth0Token()
         {
             HttpClient client = new HttpClient();
@@ -86,7 +113,7 @@ namespace IoTHub.Controllers
                 {"audience", "iothub" }
             };
             var content = new FormUrlEncodedContent(values);
-            content.Headers.Add("content-type", "application/json");
+            //content.Headers.Add("content-type", "application/json");
             var response = await client.PostAsync("https://iothub.auth0.com/oauth/token", content);
             var responseString = await response.Content.ReadAsStringAsync();
 
