@@ -1,0 +1,14 @@
+C:\Users\Anthony\Documents\Development\IoTHub\UnitTests.Data\bin\Debug\netcoreapp2.0\Microsoft.VisualStudio.TestPlatform.MSTest.TestAdapter.dll
+C:\Users\Anthony\Documents\Development\IoTHub\UnitTests.Data\bin\Debug\netcoreapp2.0\Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.Interface.dll
+C:\Users\Anthony\Documents\Development\IoTHub\UnitTests.Data\bin\Debug\netcoreapp2.0\Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.dll
+C:\Users\Anthony\Documents\Development\IoTHub\UnitTests.Data\bin\Debug\netcoreapp2.0\UnitTests.Data.deps.json
+C:\Users\Anthony\Documents\Development\IoTHub\UnitTests.Data\bin\Debug\netcoreapp2.0\UnitTests.Data.runtimeconfig.json
+C:\Users\Anthony\Documents\Development\IoTHub\UnitTests.Data\bin\Debug\netcoreapp2.0\UnitTests.Data.runtimeconfig.dev.json
+C:\Users\Anthony\Documents\Development\IoTHub\UnitTests.Data\bin\Debug\netcoreapp2.0\UnitTests.Data.dll
+C:\Users\Anthony\Documents\Development\IoTHub\UnitTests.Data\bin\Debug\netcoreapp2.0\UnitTests.Data.pdb
+C:\Users\Anthony\Documents\Development\IoTHub\UnitTests.Data\obj\Debug\netcoreapp2.0\UnitTests.Data.csprojResolveAssemblyReference.cache
+C:\Users\Anthony\Documents\Development\IoTHub\UnitTests.Data\obj\Debug\netcoreapp2.0\UnitTests.Data.csproj.CoreCompileInputs.cache
+C:\Users\Anthony\Documents\Development\IoTHub\UnitTests.Data\obj\Debug\netcoreapp2.0\UnitTests.Data.AssemblyInfoInputs.cache
+C:\Users\Anthony\Documents\Development\IoTHub\UnitTests.Data\obj\Debug\netcoreapp2.0\UnitTests.Data.AssemblyInfo.cs
+C:\Users\Anthony\Documents\Development\IoTHub\UnitTests.Data\obj\Debug\netcoreapp2.0\UnitTests.Data.dll
+C:\Users\Anthony\Documents\Development\IoTHub\UnitTests.Data\obj\Debug\netcoreapp2.0\UnitTests.Data.pdb

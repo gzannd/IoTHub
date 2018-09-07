@@ -3070,11 +3070,11 @@
       "hideWarningsAndErrors": true
     },
     "restore": {
-      "projectUniqueName": "C:\\Users\\Anthony\\Documents\\Development\\IoTHub\\IoTHub\\Common\\Common.csproj",
+      "projectUniqueName": "C:\\Users\\Anthony\\Documents\\Development\\IoTHub\\Common\\Common.csproj",
       "projectName": "Common",
-      "projectPath": "C:\\Users\\Anthony\\Documents\\Development\\IoTHub\\IoTHub\\Common\\Common.csproj",
+      "projectPath": "C:\\Users\\Anthony\\Documents\\Development\\IoTHub\\Common\\Common.csproj",
       "packagesPath": "C:\\Users\\Anthony\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Anthony\\Documents\\Development\\IoTHub\\IoTHub\\Common\\obj\\",
+      "outputPath": "C:\\Users\\Anthony\\Documents\\Development\\IoTHub\\Common\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
